@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cap Sciences API JS</title>
+    <style>
+        table{
+            border:             1px solid black;
+            text-align:         center;
+        }
+        td, th{
+            border:             1px solid black;
+        }
+        th{
+            background-color:   grey;
+            font-weight:        bold;
+        }
+        td{
+            text-align:         left;
+        }
+    </style>
+</head>
+<body>
+
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cs-api.js"></script>
+    <script type="text/javascript">
+        var medaille_id     =   "YOUR_MEDAILLE_ID";
+        var csapi = new CsApi({
+            "phpBridgeUrl":         "http://YOUR_SERVER/index.php/default/phpBridgeApi",
+            "weburl":               "http://YOUR_SERVER/",
+            "ws_authentification":  "YOUR_LOGIN:YOUR_PASS",    
+            "visiteur_id":          visiteur_id,
+            "connection":           "web"
+        }, 'web');
+
+        var data            =   {
+                                "interactif_id" : "YOUR_INTERACTIF_ID"
+                            };  
+        var medaillesLog    =   csapi.getMedaille( data );
+        var nbMedals        =   medaillesLog.length;
+        var medailles       =   new Array();
+        
+        for( var i = 0 ; i < nbMedals; i++ ){
+            medailles[ medaillesLog[i].guid ]    =   medaillesLog[i];
+        }
+        function goto(){
+            var $logs   =   $("#logs");
+            var i = 0;
+            $logs.append( "<tr><th>INDEX</th><th>NOM</th><th>Conditions d'obtention</th><th>Value</th><th>CyouID</th></tr>" );            
+            for( var valeur in medailles ){
+                (function(valeur, i) {
+                    setTimeout( function(){
+                        $logs.append( "<tr><td>" + i + "</td><td>" + medailles[valeur].libelle + "</td><td>" + medailles[valeur].description + "</td><td>" + medailles[valeur].condition_obtention + "</td><td>" + valeur + "</td></tr>" );
+                    },  i*400 );
+                })(valeur,i);
+                i++;
+            }
+        }
+
+    </script>
+
+<input type="button" onclick="goto()" value="go"/>
+<table id="logs"></table>
+</body>
+</html>

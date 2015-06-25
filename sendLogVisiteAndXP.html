@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cap Sciences API JS</title>
+    <style>
+        table{
+            border:             1px solid black;
+            text-align:         center;
+        }
+        td, th{
+            border:             1px solid black;
+        }
+        th{
+            background-color:   grey;
+            font-weight:        bold;
+        }
+        td{
+            text-align:         left;
+        }
+    </style>
+</head>
+<body>
+
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cs-api.js"></script>
+    <script type="text/javascript">
+        var visiteur_id     =   "YOUR_VISITEUR_ID";
+        var interactif_id   =   "YOUR_INTERACTIF_ID";
+        var csapi = new CsApi({
+            "phpBridgeUrl":         "http://YOUR_SERVER/index.php/default/phpBridgeApi",
+            "weburl":               "http://YOUR_SERVER/",
+            "ws_authentification":  "YOUR_LOGIN:YOUR_PASS",
+            "visiteur_id":          visiteur_id,
+            "connection":           "web",
+            "interactif_id" :       interactif_id
+        }, 'web');
+
+        var percentScoreByTypologie =   csapi.getInteractifVariable().score;
+        percentScoreByTypologie     =   JSON.parse( percentScoreByTypologie );
+        
+        console.log( percentScoreByTypologie );
+        
+        function sendScore                                                      (){
+            var score   =   $("#toSend").val();
+            var data    =   {
+                "interactif_id":    interactif_id,
+                "visiteur_id":      visiteur_id, 
+//                "visite_id": "",
+//                "exposition_id": "",
+                "start_at": Math.floor( $.now()/1000 ),
+//                "end_at": "",           
+                "resultats": "test send score",
+                "score": score
+            }
+            csapi.createLogVisite( data );
+            //OBLIGER DE FAIRE LE POST XP POUR QUE LA TYPOLOGIE SE METTE A JOUR
+            for( var key in percentScoreByTypologie ){
+                if ( isNaN(percentScoreByTypologie[key]))
+                    continue;
+                var percent     =   parseInt( percentScoreByTypologie[key] );
+                var tempScore   =   parseInt( score*percent/100 );
+                csapi.postVisiteurXp(
+                    {
+                        "typologie_id": key, 
+                        "score":        tempScore
+                    }
+                );
+            }
+            setTimeout( function(){
+                updateXPDisplay();    
+            }, 500 );
+            
+        }
+
+        function updateXPDisplay                                                (){
+            var scoreByTypologie        =   csapi.getXpScoreByTypology( {"visiteur_id": visiteur_id} ); 
+        
+            console.log( scoreByTypologie );
+             for ( var key in scoreByTypologie ){
+                 $('#key' + key ).text( scoreByTypologie[key].typologie_id );
+                 $('#val' + key ).text( scoreByTypologie[key].score );
+             }
+            
+        }
+        $(function(){
+            updateXPDisplay();
+        });
+    </script>
+
+<input id="toSend" type="number" max="500" min ="0" value="100"/>
+<input type="button" onclick="sendScore()" value="SendScore"/>
+<table id="xp">
+    <tr>
+        <td>
+            Typologie
+        </td>
+        <td>
+            Value
+        </td>
+    </tr>
+    <tr>
+        <td id="key0">
+        </td>
+        <td id="val0">
+        </td>
+    </tr>
+    <tr>
+        <td id="key1">
+        </td>
+        <td id="val1">
+        </td>
+    </tr>
+    <tr>
+        <td id="key2">
+        </td>
+        <td id="val2">
+        </td>
+    </tr>
+</table>
+</body>
+</html>

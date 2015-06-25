@@ -1,0 +1,100 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>C-Yourmag connect example</title>
+
+    <link href="css/semantic.min.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/semantic.min.js"></script>   
+    <script type="text/javascript" src="js/cyou.js"></script>           <!-- AUTH JS-->
+    <script type="text/javascript" src="js/cs-api.js"></script>         <!-- CS API-->
+    <script type="text/javascript" src="js/main.js"></script>           <!-- MAIN CLASS-->
+</head>
+<body>
+    <div id="container">   
+        <div style="text-align: left; border: 10px red solid;">
+            <li>
+                Pour être capable d'utiliser l'identification via le SSO, il vous faudra un CLIENT_ID et un CLIENT_SECRET spécifique à votre URL. (A renseigner dans le fichier "inc.config.php").
+            </li>
+            <br/>
+            <li>
+                Pour tester, il vous faudra avoir ( ou créer ) un compte.<br/>
+            </li>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <div id="loginContent">
+            <div class="name">Connexion CYOU OAuth</div>
+            <a class="ui red button id-button unauthentified">Connexion</a>
+            <a class="ui green button cookie">Oublier cookie</a>
+            <a class="ui purple button disconnect">Déconnexion</a>
+        </div>
+
+        <section id="contentProfil">
+            <p>
+                Pseudo :  <span id="pseudo" ></span>
+            </p>
+            <p>
+                Email : <span id="mail" ></span>
+            </p>
+            <p>
+                Avatar : <img id="avatar" src="" width="250" height="250" alt="avatar image not found">
+            </p>
+            <p>
+                Score : <span id="score" ></span>
+            </p>            
+            <p>
+                Divers : <span id="divers" ></span>
+            </p>            
+            <p>
+                GUID : <span id="guid" ></span>
+            </p>            
+        </section>
+
+        
+        
+        <section id="contentProfil2">
+            <p>
+                Pseudo :  <span id="pseudo2" ></span>
+            </p>
+            <p>
+                Email : <span id="mail2" ></span>
+            </p>
+            <p>
+                Avatar : <img id="avatar2" src="" width="250" height="250" alt="avatar image not found">
+            </p>
+            <p>
+                Score Interactif for player : <span id="score2" ></span>
+            </p>
+            <p>
+                Score typologie for player : <span id="scoreTypo2" ></span>
+            </p>
+            <p>
+                Divers : <span id="divers2" ></span>
+            </p>
+            <p>
+                interactif Name : <span class="interactifName" ></span>
+            </p>
+            <p>
+                NB Logs Visite : <span id="nbLogVisite" ></span>
+            </p>
+            <p>
+                Last Log Visite Score (Methode1) : <span id="lastLogVisiteScoreMethod1" ></span>
+            </p>
+            <p>
+                Last Log Visite Score (Methode2) : <span id="lastLogVisiteScoreMethod2" ></span>
+            </p>
+            <p>
+                test : <span id="test2" ></span>
+            </p>
+        </section>
+        
+    </div>
+</body>
+</html>
+
+<!--169566-->

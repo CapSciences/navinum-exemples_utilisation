@@ -1,0 +1,44 @@
+html { 
+    height:             100%;
+}
+body { 
+    padding:            0; 
+    margin:             0;
+    height:             100%;
+}
+
+#container {
+    width:              98%;
+    min-width:          800px;
+    min-height:         500px;
+    margin:             auto;
+    min-height:         100%;
+    position:           relative;
+    text-align:         center;
+}
+#loginContent a{
+    display:            block;
+    width:              80%;
+    text-align:         center;
+    margin-bottom:      3px;
+    margin-top:         3px;
+    margin-left:        auto;
+    margin-right:       auto;
+}
+#loginContent{
+    border:             5px grey solid;
+    width:              30%;
+    text-align:         center;
+    margin:             auto;
+}
+section {
+    margin:             5px;
+    display:            inline-block;
+    border:             1px red solid;
+    width:              30%;
+    vertical-align:     top;
+    min-width:          400px;
+}
+section p{
+    text-align:         left;
+}

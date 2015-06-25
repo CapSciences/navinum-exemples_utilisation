@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cap Sciences API JS</title>
+    <style>
+        table{
+            border:             1px solid black;
+            text-align:         center;
+        }
+        td, th{
+            border:             1px solid black;
+        }
+        th{
+            background-color:   grey;
+            font-weight:        bold;
+        }
+        td{
+            text-align:         left;
+        }
+    </style>
+</head>
+<body>
+
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cs-api.js"></script>
+    <script type="text/javascript">
+        var visiteur_id     =   "YOUR_VISITEUR_ID";
+        var csapi = new CsApi({
+            "phpBridgeUrl":         "http://YOUR_SERVER/index.php/default/phpBridgeApi",
+            "weburl":               "http://YOUR_SERVER/",
+            "ws_authentification":  "YOUR_LOGIN:YOUR_PASS",        
+            "visiteur_id":          visiteur_id,
+            "connection":           "web"
+        }, 'web');
+        
+        var limit   =   10;
+        
+        var data    =   {
+            "limit"         :   limit,
+            "distinct"      :   1,      
+//            "start_at"      :   "",
+//            "interactif_id" :   "",
+//            "visiteur_id"   :   ""
+        }; 
+        
+        var rankingData =   csapi.getLogVisiteHighScoreV2( data ).logVisite;
+        limit           =   rankingData.length;
+        
+        function goto(){
+            var $logs   =   $("#logs");
+            $logs.append( "<tr><th>INDEX</th><th>Score</th><th>guid</th><th>interactif_id</th><th>date debut</th><th>date fin</th></tr>" );            
+            for( var i = 0 ; i < limit ; i++ ){
+                (function(i) {
+                    setTimeout( function(){
+                        $logs.append( "<tr><td>" + (i+1) + "</td><td>" + rankingData[i].highScore + "</td><td>" + rankingData[i].visiteur_id + "</td><td>" + rankingData[i].interactif_id + "</td><td>" + rankingData[i].start_at + "</td><td>" + rankingData[i].end_at + "</td></tr>" );
+                    },  i*200 );
+                })(i);
+            }
+        }
+
+    </script>
+
+<input type="button" onclick="goto()" value="go"/>
+<table id="logs"></table>
+</body>
+</html>

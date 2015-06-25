@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cap Sciences API JS</title>
+    <style>
+        table{
+            border:             1px solid black;
+            text-align:         center;
+        }
+        td, th{
+            border:             1px solid black;
+        }
+        th{
+            background-color:   grey;
+            font-weight:        bold;
+        }
+        td{
+            text-align:         left;
+        }
+    </style>
+</head>
+<body>
+
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cs-api.js"></script>
+    <script type="text/javascript">
+        var visiteur_id     =   "YOUR_VISITEUR_ID";
+        var interactif_id   =   "YOUR_INTERACTIF_ID";
+        var csapi = new CsApi({
+            "phpBridgeUrl":         "http://YOUR_SERVER/index.php/default/phpBridgeApi",
+            "weburl":               "http://YOUR_SERVER/",
+            "ws_authentification":  "YOUR_LOGIN:YOUR_PASS",
+            "visiteur_id":          visiteur_id,
+            "connection":           "web",
+            "interactif_id" :       interactif_id
+        }, 'web');
+
+        var log             =   csapi.getInteractifVariable();
+
+        function goto(){
+            var $logs   =   $("#logs");
+            var i = 0;
+            $logs.append( "<tr><th>INDEX</th><th>Key</th><th>Value</th></tr>" );            
+            for( var key in log ){
+                (function(key, i) {
+                    setTimeout( function(){
+                        $logs.append( "<tr><td>" + i + "</td><td>" + key + "</td><td>" + log[key] + "</td></tr>" );
+                    },  i*400 );
+                })(key,i);
+                i++;
+            }
+        }
+
+    </script>
+
+<input type="button" onclick="goto()" value="go"/>
+<table id="logs"></table>
+</body>
+</html>

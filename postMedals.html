@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cap Sciences API JS</title>
+    <style>
+        table{
+            border:             1px solid black;
+            text-align:         center;
+        }
+        td, th{
+            border:             1px solid black;
+        }
+        th{
+            background-color:   grey;
+            font-weight:        bold;
+        }
+        td{
+            text-align:         left;
+        }
+    </style>
+</head>
+<body>
+
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cs-api.js"></script>
+    <script type="text/javascript">
+        var medaille_id     =   "YOUR_MEDAILLE_ID";
+        var univers_id      =   "YOUR_UNIVERS_ID";
+        var visiteur_id     =   "YOUR_VISITEUR_ID";
+        var csapi = new CsApi({
+            "phpBridgeUrl": "http://YOUR_SERVER/index.php/default/phpBridgeApi",
+            "weburl": "http://YOUR_SERVER/",
+            "ws_authentification": "YOUR_LOGIN:YOUR_PASS",
+            "visiteur_id": visiteur_id,
+            "connection": "web"
+        }, 'web');
+
+        
+        function postMedals                                                     (){
+            var data    =   {
+                "visiteur_id":          visiteur_id,
+                "medaille_id":          medaille_id,
+                "univers_id":           univers_id,                             // OPTIONNEL, dépend si l'intéractif appartient à un univers.
+                "contexte_id":          "YOUR_CONTEXT_ID"      
+            };
+
+            csapi.postVisiteurMedaille( data );
+        }
+
+    </script>
+
+    <input type="button" onclick="postMedals()" value="SendScore"/>
+</body>
+</html>
